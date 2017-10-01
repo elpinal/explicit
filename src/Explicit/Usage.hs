@@ -74,3 +74,8 @@ newtype MetaDef = MetaDef (String, Language Alphabet)
 
 instance Show MetaDef where
   show (MetaDef (lhs, rhs)) = lhs ++ " = " ++ show (format rhs)
+
+data Usage = Usage (Language Alphabet) [MetaDef]
+
+instance Show Usage where
+  show (Usage l defs) = unlines $ [show $ format l , ""] ++ map show defs
