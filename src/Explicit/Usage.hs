@@ -73,4 +73,4 @@ meta = Symbol . Meta
 newtype MetaDef = MetaDef (String, Language Alphabet)
 
 instance Show MetaDef where
-  show (MetaDef (lhs, rhs)) = lhs ++ ": " ++ show (format rhs)
+  show (MetaDef (lhs, rhs)) = lhs ++ " = " ++ show (format rhs)

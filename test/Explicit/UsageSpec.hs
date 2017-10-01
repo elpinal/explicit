@@ -17,7 +17,7 @@ spec = do
       format exampleUsage `shouldBe` Meta "\"git\" flags (\"clone\" | \"init\")"
   describe "MetaDef" $
     it "is the definition of a meta variable" $
-      show (MetaDef $ ("flags", lit "--help" |- lit "--version")) `shouldBe` "flags: \"--help\" | \"--version\""
+      show (MetaDef $ ("flags", lit "--help" |- lit "--version")) `shouldBe` "flags = \"--help\" | \"--version\""
 
 exampleUsage :: Language Alphabet
 exampleUsage = lit "git" #- meta "flags" #- (lit "clone" |- lit "init")
