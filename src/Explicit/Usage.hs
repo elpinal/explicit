@@ -10,6 +10,7 @@ data Language a where
   Positive :: Monoid m => Language m -> Language m
   Union :: Monoid m => Language m -> Language m -> Language m
   Concat :: Monoid m => Language m -> Language m -> Language m
+  Option :: Monoid m => Language m -> Language m
 
 toString :: Language String -> String
 toString (Symbol m) = m
@@ -17,6 +18,7 @@ toString (Kleene l) = toString l <> "*"
 toString (Positive l) = toString l <> "+"
 toString (Union l m) = toString l <> "|" <> toString m
 toString (Concat l m) = toString l <> toString m
+toString (Option l) = toString l <> "?"
 
 format :: Language Alphabet -> Alphabet
 format (Symbol m) = m
@@ -24,6 +26,7 @@ format (Kleene l) = Meta "[" <> format l <> Meta "...]"
 format (Positive l) = format l <> Meta "..."
 format (Union l m) = format l <> Meta "|" <> format m
 format (Concat l m) = format l <> Meta " " <> format m
+format (Option l) = Meta "[" <> format l <> Meta "]"
 
 data Alphabet =
     Literal String
