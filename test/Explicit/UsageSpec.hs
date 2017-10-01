@@ -10,7 +10,7 @@ spec = do
     it "stringify Language" $
       toString (Kleene (Symbol "a")) `shouldBe` "a*"
 
-  describe "toUsageString" $
+  describe "format" $
     it "stringify Language suitably for usage" $ do
-      toUsageString (Kleene (Symbol "a")) `shouldBe` "[\"a\"...]"
-      toUsageString (Positive (Symbol "a")) `shouldBe` "\"a\"..."
+      format (Kleene (Symbol $ Literal "a")) `shouldBe` Meta "[\"a\"...]"
+      format (Positive (Symbol $ Meta "a")) `shouldBe` Meta "a..."

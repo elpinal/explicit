@@ -18,9 +18,25 @@ toString (Positive l) = toString l <> "+"
 toString (Union l m) = toString l <> "|" <> toString m
 toString (Concat l m) = toString l <> toString m
 
-toUsageString :: Language String -> String
-toUsageString (Symbol m) = show m
-toUsageString (Kleene l) = "[" <> toUsageString l <> "...]"
-toUsageString (Positive l) = toUsageString l <> "..."
-toUsageString (Union l m) = toUsageString l <> "|" <> toUsageString m
-toUsageString (Concat l m) = toUsageString l <> " " <> toUsageString m
+format :: Language Alphabet -> Alphabet
+format (Symbol m) = m
+format (Kleene l) = Meta "[" <> format l <> Meta "...]"
+format (Positive l) = format l <> Meta "..."
+format (Union l m) = format l <> Meta "|" <> format m
+format (Concat l m) = format l <> Meta " " <> format m
+
+data Alphabet =
+    Literal String
+  | Meta String
+    deriving (Eq, Show)
+
+instance Monoid Alphabet where
+  mempty = Meta ""
+  (Meta a) `mappend` (Meta b) = Meta $ a <> b
+  (Meta a) `mappend` (Literal b) = Meta $ a <> show b
+  (Literal a) `mappend` (Meta b) = Meta $ show a <> b
+  (Literal a) `mappend` (Literal b) = Literal $ a <> b
+
+fromAlphabet :: Alphabet -> String
+fromAlphabet (Literal s) = s
+fromAlphabet (Meta s) = s
