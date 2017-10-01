@@ -51,7 +51,7 @@ isUnion _ = False
 data Alphabet =
     Literal String
   | Meta String
-    deriving (Eq, Show)
+    deriving Eq
 
 instance Monoid Alphabet where
   mempty = Meta ""
@@ -60,9 +60,9 @@ instance Monoid Alphabet where
   (Literal a) `mappend` (Meta b) = Meta $ show a <> b
   (Literal a) `mappend` (Literal b) = Literal $ a <> b
 
-fromAlphabet :: Alphabet -> String
-fromAlphabet (Literal s) = s
-fromAlphabet (Meta s) = s
+instance Show Alphabet where
+  show (Literal s) = show s
+  show (Meta s) = s
 
 lit :: String -> Language Alphabet
 lit = Symbol . Literal
