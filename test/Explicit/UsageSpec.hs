@@ -11,5 +11,6 @@ spec = do
       toString (Kleene (Symbol "a")) `shouldBe` "a*"
 
   describe "toUsageString" $
-    it "stringify Language suitably for usage" $
+    it "stringify Language suitably for usage" $ do
       toUsageString (Kleene (Symbol "a")) `shouldBe` "[\"a\"...]"
+      toUsageString (Positive (Symbol "a")) `shouldBe` "\"a\"..."
