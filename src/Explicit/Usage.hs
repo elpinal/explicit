@@ -32,7 +32,7 @@ format :: Language Alphabet -> Alphabet
 format (Symbol m) = m
 format (Kleene l) = Meta "[" <> format l <> Meta "...]"
 format (Positive l) = format l <> Meta "..."
-format (Union l m) = format l <> Meta "|" <> format m
+format (Union l m) = format l <> Meta " | " <> format m
 format (Concat l m) = format l <> Meta " " <> format m
 format (Option l) = Meta "[" <> format l <> Meta "]"
 

@@ -14,7 +14,7 @@ spec = do
     it "stringify Language suitably for usage" $ do
       format (Kleene (Symbol $ Literal "a")) `shouldBe` Meta "[\"a\"...]"
       format (Positive (Symbol $ Meta "a")) `shouldBe` Meta "a..."
-      format exampleUsage `shouldBe` Meta "\"git\" flags \"clone\"|\"init\""
+      format exampleUsage `shouldBe` Meta "\"git\" flags \"clone\" | \"init\""
 
 exampleUsage :: Language Alphabet
 exampleUsage = lit "git" #- meta "flags" #- (lit "clone" |- lit "init")
