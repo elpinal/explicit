@@ -9,3 +9,7 @@ spec = do
   describe "toString" $
     it "stringify Language" $
       toString (Kleene (Symbol "a")) `shouldBe` "a*"
+
+  describe "toUsageString" $
+    it "stringify Language suitably for usage" $
+      toUsageString (Kleene (Symbol "a")) `shouldBe` "[\"a\"...]"
