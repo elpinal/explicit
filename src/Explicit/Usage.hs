@@ -30,11 +30,23 @@ toString (Option l) = toString l <> "?"
 
 format :: Language Alphabet -> Alphabet
 format (Symbol m) = m
-format (Kleene l) = Meta "[" <> format l <> Meta "...]"
-format (Positive l) = format l <> Meta "..."
+format (Kleene l) = Meta "[" <> parens (isBinOp l) (format l) <> Meta "...]"
+format (Positive l) = parens (isBinOp l) (format l) <> Meta "..."
 format (Union l m) = format l <> Meta " | " <> format m
-format (Concat l m) = format l <> Meta " " <> format m
+format (Concat l m) = parens (isUnion l) (format l) <> Meta " " <> parens (isUnion m) (format m)
 format (Option l) = Meta "[" <> format l <> Meta "]"
+
+parens :: Bool -> Alphabet -> Alphabet
+parens b x = if b then Meta "(" <> x <> Meta ")" else x
+
+isBinOp :: Language a -> Bool
+isBinOp (Union _ _) = True
+isBinOp (Concat _ _) = True
+isBinOp _ = False
+
+isUnion :: Language a -> Bool
+isUnion (Union _ _) = True
+isUnion _ = False
 
 data Alphabet =
     Literal String
