@@ -12,6 +12,14 @@ data Language a where
   Concat :: Monoid m => Language m -> Language m -> Language m
   Option :: Monoid m => Language m -> Language m
 
+infixl 2 |-
+(|-) :: Monoid a => Language a -> Language a -> Language a
+(|-) = Union
+
+infixl 3 #-
+(#-) :: Monoid a => Language a -> Language a -> Language a
+(#-) = Concat
+
 toString :: Language String -> String
 toString (Symbol m) = m
 toString (Kleene l) = toString l <> "*"
@@ -43,3 +51,9 @@ instance Monoid Alphabet where
 fromAlphabet :: Alphabet -> String
 fromAlphabet (Literal s) = s
 fromAlphabet (Meta s) = s
+
+lit :: String -> Language Alphabet
+lit = Symbol . Literal
+
+meta :: String -> Language Alphabet
+meta = Symbol . Meta
