@@ -96,13 +96,13 @@ newtype MetaDef = MetaDef (String, Language Alphabet)
   deriving Show
 
 instance Display MetaDef where
-  display (MetaDef (lhs, rhs)) = lhs ++ " = " ++ display (format rhs)
+  display (MetaDef (lhs, rhs)) = lhs ++ " = " ++ display rhs
 
 data Usage = Usage (Language Alphabet) [MetaDef]
   deriving Show
 
 instance Display Usage where
-  display (Usage l defs) = unlines $ [display $ format l , ""] ++ map display defs
+  display (Usage l defs) = unlines $ [display l , ""] ++ map display defs
 
 -- |
 -- Like @Show@, but for user-facing output.
