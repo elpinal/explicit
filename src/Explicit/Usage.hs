@@ -44,14 +44,17 @@ instance Display (Language Alphabet) where
 
 format :: Language Alphabet -> Alphabet
 format (Symbol m) = m
-format (Kleene l) = Meta "[" <> parens (isBinOp l) (format l) <> Meta "...]"
-format (Positive l) = parens (isBinOp l) (format l) <> Meta "..."
+format (Kleene l) = Meta "[" <> parens isBinOp l <> Meta "...]"
+format (Positive l) = parens isBinOp l <> Meta "..."
 format (Union l m) = format l <> Meta " | " <> format m
-format (Concat l m) = parens (isUnion l) (format l) <> Meta " " <> parens (isUnion m) (format m)
+format (Concat l m) = parens isUnion l <> Meta " " <> parens isUnion m
 format (Option l) = Meta "[" <> format l <> Meta "]"
 
-parens :: Bool -> Alphabet -> Alphabet
-parens b x = if b then Meta "(" <> x <> Meta ")" else x
+parens :: (Language Alphabet -> Bool) -> Language Alphabet -> Alphabet
+parens f = parens' <$> f <*> format
+  where
+    parens' :: Bool -> Alphabet -> Alphabet
+    parens' b x = if b then Meta "(" <> x <> Meta ")" else x
 
 isBinOp :: Monoid a => Language a -> Bool
 isBinOp (Union _ _) = True
