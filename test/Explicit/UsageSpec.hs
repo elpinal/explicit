@@ -8,12 +8,12 @@ spec :: Spec
 spec = do
   describe "toString" $
     it "stringify Language" $
-      toString (Kleene (Symbol "a")) `shouldBe` "a*"
+      toString (Kleene $ Symbol "a") `shouldBe` "a*"
 
   describe "format" $
     it "stringify Language suitably for usage" $ do
-      format (Kleene (Symbol $ Literal "a")) `shouldBe` Meta "[\"a\"...]"
-      format (Positive (Symbol $ Meta "a")) `shouldBe` Meta "a..."
+      format (Kleene . Symbol $ Literal "a") `shouldBe` Meta "[\"a\"...]"
+      format (Positive . Symbol $ Meta "a") `shouldBe` Meta "a..."
       format exampleUsage `shouldBe` Meta "\"git\" flags (\"clone\" | \"init\")"
 
   describe "MetaDef" $
