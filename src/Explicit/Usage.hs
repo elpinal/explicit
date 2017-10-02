@@ -1,20 +1,17 @@
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE FlexibleInstances #-}
 
 module Explicit.Usage where
 
 import Data.Monoid
 
-data Language a where
-  Symbol :: Monoid m => m -> Language m
-  Kleene :: Monoid m => Language m -> Language m
-  Positive :: Monoid m => Language m -> Language m
-  Union :: Monoid m => Language m -> Language m -> Language m
-  Concat :: Monoid m => Language m -> Language m -> Language m
-  Option :: Monoid m => Language m -> Language m
-
-deriving instance Show a => Show (Language a)
+data Monoid a => Language a =
+    Symbol a
+  | Kleene (Language a)
+  | Positive (Language a)
+  | Union (Language a) (Language a)
+  | Concat (Language a) (Language a)
+  | Option (Language a)
+    deriving Show
 
 -- |
 -- Synonym for @Union@.
@@ -56,12 +53,12 @@ format (Option l) = Meta "[" <> format l <> Meta "]"
 parens :: Bool -> Alphabet -> Alphabet
 parens b x = if b then Meta "(" <> x <> Meta ")" else x
 
-isBinOp :: Language a -> Bool
+isBinOp :: Monoid a => Language a -> Bool
 isBinOp (Union _ _) = True
 isBinOp (Concat _ _) = True
 isBinOp _ = False
 
-isUnion :: Language a -> Bool
+isUnion :: Monoid a => Language a -> Bool
 isUnion (Union _ _) = True
 isUnion _ = False
 
