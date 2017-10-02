@@ -54,7 +54,7 @@ format (Option l) = Meta "[" <> format l <> Meta "]"
 -- Wraps it with parentheses if predicate is true.
 --
 -- >>> parens isBinOp (lit "a" |- meta "b")
--- "\"a\" | b"
+-- Meta "(\"a\" | b)"
 parens :: (Language Alphabet -> Bool) -> Language Alphabet -> Alphabet
 parens f = parens' <$> f <*> format
   where
