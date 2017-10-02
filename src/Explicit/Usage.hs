@@ -1,5 +1,6 @@
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE FlexibleInstances #-}
 
 module Explicit.Usage where
 
@@ -40,6 +41,9 @@ toString (Positive l) = toString l <> "+"
 toString (Union l m) = toString l <> "|" <> toString m
 toString (Concat l m) = toString l <> toString m
 toString (Option l) = toString l <> "?"
+
+instance Display (Language Alphabet) where
+  display = display . format
 
 format :: Language Alphabet -> Alphabet
 format (Symbol m) = m
