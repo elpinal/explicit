@@ -6,10 +6,6 @@ import Explicit.Usage
 
 spec :: Spec
 spec = do
-  describe "toString" $
-    it "stringify Language" $
-      toString (Kleene $ Symbol "a") `shouldBe` "a*"
-
   describe "format" $
     it "stringify Language suitably for usage" $ do
       format (Kleene . Symbol $ Literal "a") `shouldBe` Meta "[\"a\"...]"
@@ -18,6 +14,7 @@ spec = do
 
   describe "display" $
     it "formats things into user-facing output" $ do
+      display (Kleene $ Symbol "a") `shouldBe` "a*"
       display flagDef `shouldBe` "flags = \"--help\" | \"--version\""
       display (Usage exampleUsage [flagDef]) `shouldBe` unlines [display exampleUsage, "", display flagDef]
 

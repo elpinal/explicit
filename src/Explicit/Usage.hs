@@ -34,13 +34,13 @@ infixl 3 #-
 (#-) :: Monoid a => Language a -> Language a -> Language a
 (#-) = Concat
 
-toString :: Language String -> String
-toString (Symbol m) = m
-toString (Kleene l) = toString l <> "*"
-toString (Positive l) = toString l <> "+"
-toString (Union l m) = toString l <> "|" <> toString m
-toString (Concat l m) = toString l <> toString m
-toString (Option l) = toString l <> "?"
+instance Display (Language String) where
+  display (Symbol m) = m
+  display (Kleene l) = display l <> "*"
+  display (Positive l) = display l <> "+"
+  display (Union l m) = display l <> "|" <> display m
+  display (Concat l m) = display l <> display m
+  display (Option l) = display l <> "?"
 
 instance Display (Language Alphabet) where
   display = display . format
