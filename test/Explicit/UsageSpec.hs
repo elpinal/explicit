@@ -16,12 +16,9 @@ spec = do
       format (Positive . Symbol $ Meta "a") `shouldBe` Meta "a..."
       format exampleUsage `shouldBe` Meta "\"git\" flags (\"clone\" | \"init\")"
 
-  describe "MetaDef" $
-    it "is the definition of a meta variable" $
+  describe "display" $ do
+    it "formats things into user-facing output" $
       display (MetaDef ("flags", lit "--help" |- lit "--version")) `shouldBe` "flags = \"--help\" | \"--version\""
-
-  describe "Usage" $
-    it "can be formatted" $
       display (Usage exampleUsage [flagDef]) `shouldBe` unlines [display exampleUsage, "", display flagDef]
 
 exampleUsage :: Language Alphabet
