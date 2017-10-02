@@ -4,7 +4,7 @@ module Explicit.Usage where
 
 import Data.Monoid
 
-data Monoid a => Language a =
+data Language a =
     Symbol a
   | Kleene (Language a)
   | Positive (Language a)
