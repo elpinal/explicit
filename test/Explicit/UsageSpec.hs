@@ -18,11 +18,11 @@ spec = do
 
   describe "MetaDef" $
     it "is the definition of a meta variable" $
-      show (MetaDef ("flags", lit "--help" |- lit "--version")) `shouldBe` "flags = \"--help\" | \"--version\""
+      display (MetaDef ("flags", lit "--help" |- lit "--version")) `shouldBe` "flags = \"--help\" | \"--version\""
 
   describe "Usage" $
     it "can be formatted" $
-      show (Usage exampleUsage [flagDef]) `shouldBe` unlines [show (format exampleUsage), "", show flagDef]
+      display (Usage exampleUsage [flagDef]) `shouldBe` unlines [display (format exampleUsage), "", display flagDef]
 
 exampleUsage :: Language Alphabet
 exampleUsage = lit "git" #- meta "flags" #- (lit "clone" |- lit "init")

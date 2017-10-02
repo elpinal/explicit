@@ -1,4 +1,5 @@
 {-# LANGUAGE GADTs #-}
+{-# LANGUAGE StandaloneDeriving #-}
 
 module Explicit.Usage where
 
@@ -11,6 +12,8 @@ data Language a where
   Union :: Monoid m => Language m -> Language m -> Language m
   Concat :: Monoid m => Language m -> Language m -> Language m
   Option :: Monoid m => Language m -> Language m
+
+deriving instance Show a => Show (Language a)
 
 infixl 2 |-
 (|-) :: Monoid a => Language a -> Language a -> Language a
@@ -51,7 +54,7 @@ isUnion _ = False
 data Alphabet =
     Literal String
   | Meta String
-    deriving Eq
+    deriving (Eq, Show)
 
 instance Monoid Alphabet where
   mempty = Meta ""
@@ -60,9 +63,9 @@ instance Monoid Alphabet where
   (Literal a) `mappend` (Meta b) = Meta $ show a <> b
   (Literal a) `mappend` (Literal b) = Literal $ a <> b
 
-instance Show Alphabet where
-  show (Literal s) = show s
-  show (Meta s) = s
+instance Display Alphabet where
+  display (Literal s) = show s
+  display (Meta s) = s
 
 lit :: String -> Language Alphabet
 lit = Symbol . Literal
@@ -71,11 +74,16 @@ meta :: String -> Language Alphabet
 meta = Symbol . Meta
 
 newtype MetaDef = MetaDef (String, Language Alphabet)
+  deriving Show
 
-instance Show MetaDef where
-  show (MetaDef (lhs, rhs)) = lhs ++ " = " ++ show (format rhs)
+instance Display MetaDef where
+  display (MetaDef (lhs, rhs)) = lhs ++ " = " ++ display (format rhs)
 
 data Usage = Usage (Language Alphabet) [MetaDef]
+  deriving Show
 
-instance Show Usage where
-  show (Usage l defs) = unlines $ [show $ format l , ""] ++ map show defs
+instance Display Usage where
+  display (Usage l defs) = unlines $ [display $ format l , ""] ++ map display defs
+
+class Display a where
+  display :: a -> String
