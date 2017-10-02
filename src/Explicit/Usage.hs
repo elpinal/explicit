@@ -99,5 +99,10 @@ data Usage = Usage (Language Alphabet) [MetaDef]
 instance Display Usage where
   display (Usage l defs) = unlines $ [display $ format l , ""] ++ map display defs
 
+-- |
+-- Like @Show@, but for user-facing output.
+--
+-- >>> display (Symbol "a" |- Symbol "b")
+-- "a|b"
 class Display a where
   display :: a -> String
