@@ -15,10 +15,20 @@ data Language a where
 
 deriving instance Show a => Show (Language a)
 
+-- |
+-- Synonym for @Union@.
+--
+-- >>> Symbol "a" |- Symbol "b"
+-- Union (Symbol "a") (Symbol "b")
 infixl 2 |-
 (|-) :: Monoid a => Language a -> Language a -> Language a
 (|-) = Union
 
+-- |
+-- Synonym for @Concat@.
+--
+-- >>> Symbol "a" #- Symbol "b"
+-- Concat (Symbol "a") (Symbol "b")
 infixl 3 #-
 (#-) :: Monoid a => Language a -> Language a -> Language a
 (#-) = Concat
