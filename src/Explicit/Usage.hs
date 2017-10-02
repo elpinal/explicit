@@ -50,6 +50,11 @@ format (Union l m) = format l <> Meta " | " <> format m
 format (Concat l m) = parens isUnion l <> Meta " " <> parens isUnion m
 format (Option l) = Meta "[" <> format l <> Meta "]"
 
+-- |
+-- Wraps it with parentheses if predicate is true.
+--
+-- >>> parens isBinOp (lit "a" |- meta "b")
+-- "\"a\" | b"
 parens :: (Language Alphabet -> Bool) -> Language Alphabet -> Alphabet
 parens f = parens' <$> f <*> format
   where
