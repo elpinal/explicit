@@ -22,7 +22,10 @@ spec = do
 
   describe "Usage" $
     it "can be formatted" $
-      show (Usage exampleUsage [MetaDef ("flags", lit "--help" |- lit "--version")]) `shouldBe` unlines ["\"git\" flags (\"clone\" | \"init\")", "", "flags = \"--help\" | \"--version\""]
+      show (Usage exampleUsage [flagDef]) `shouldBe` unlines ["\"git\" flags (\"clone\" | \"init\")", "", "flags = \"--help\" | \"--version\""]
 
 exampleUsage :: Language Alphabet
 exampleUsage = lit "git" #- meta "flags" #- (lit "clone" |- lit "init")
+
+flagDef :: MetaDef
+flagDef = MetaDef ("flags", lit "--help" |- lit "--version")
