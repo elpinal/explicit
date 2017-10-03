@@ -35,7 +35,7 @@ instance Display (Language String) where
   display (Symbol m) = m
   display (Kleene l) = display l <> "*"
   display (Positive l) = display l <> "+"
-  display (Union l m) = display l <> "|" <> display m
+  display (Union l m) = display l <> " | " <> display m
   display (Concat l m) = display l <> display m
   display (Option l) = display l <> "?"
 
@@ -113,6 +113,6 @@ instance Display Usage where
 -- Like @Show@, but for user-facing output.
 --
 -- >>> display (Symbol "a" |- Symbol "b")
--- "a|b"
+-- "a | b"
 class Display a where
   display :: a -> String
