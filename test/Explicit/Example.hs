@@ -46,5 +46,5 @@ helpHeader =
 usage :: Language Alphabet
 usage = lit "example" #- (meta "flag" |- Kleene (meta "filepaths"))
 
-def :: MetaDef
-def = MetaDef ("flag", lit "-h")
+def :: WithDesc
+def = WithDesc (MetaDef ("flag", lit "-h"), "Show this help")

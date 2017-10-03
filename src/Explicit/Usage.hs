@@ -98,6 +98,11 @@ newtype MetaDef = MetaDef (String, Language Alphabet)
 instance Display MetaDef where
   display (MetaDef (lhs, rhs)) = lhs ++ " = " ++ display rhs
 
+newtype WithDesc = WithDesc (MetaDef, String)
+
+instance Display WithDesc where
+  display (WithDesc (def, desc)) = display def ++ " # " ++ desc
+
 data Usage = Usage (Language Alphabet) [MetaDef]
   deriving Show
 
