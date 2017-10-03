@@ -8,7 +8,7 @@ run :: [String] -> Writer [String] ()
 run args = do
   tell [ "Hello!"
        , "This is an example program for testing of Explicit module."
-       , "The arguments are processed as filenames"
+       , "The arguments are processed as filenames."
        ]
   case args of
     ("-h" : _) -> help
