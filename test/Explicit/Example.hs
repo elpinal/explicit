@@ -1,8 +1,12 @@
 module Explicit.Example where
 
 import Control.Monad.Writer.Lazy
+import System.Environment
 
 import Explicit.Usage
+
+main :: IO ()
+main = fmap (execWriter . run) getArgs >>= mapM_ putStrLn
 
 run :: [String] -> Writer [String] ()
 run args = do
