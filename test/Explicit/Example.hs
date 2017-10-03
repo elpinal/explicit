@@ -52,7 +52,7 @@ helpHeader =
   ]
 
 usage :: Language Alphabet
-usage = lit "example" #- (meta "flag" |- Kleene (meta "filepaths"))
+usage = lit "example" #- (meta "flag" |- Option (lit "-verbose") #- Kleene (meta "filepaths"))
 
 defs :: WithDesc
 defs = WithDesc (MetaDef ("flag", lit "-h" |- lit "-v"), display $ Symbol "Show this help" |- Symbol "Show the version")

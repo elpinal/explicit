@@ -31,7 +31,7 @@ spec = do
 
       let msg = [ "Usage:"
                 , ""
-                , "    \"example\" (flag | [filepaths...])"
+                , "    \"example\" (flag | [\"-verbose\"] [filepaths...])"
                 , ""
                 , "Name definitions:"
                 , ""
