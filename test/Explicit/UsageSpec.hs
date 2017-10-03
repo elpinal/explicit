@@ -2,12 +2,14 @@ module Explicit.UsageSpec where
 
 import Test.Hspec
 
+import Control.Monad.Writer.Lazy
+
 import Explicit.Usage
 
 import Explicit.Example
 
 spec :: Spec
-spec =
+spec = do
   describe "display" $
     it "formats things into user-facing output" $ do
       display (Kleene $ Symbol "a") `shouldBe` "a*"
@@ -17,6 +19,18 @@ spec =
 
       display flagDef `shouldBe` "flags = \"--help\" | \"--version\""
       display (Usage exampleUsage [flagDef]) `shouldBe` unlines [display exampleUsage, "", display flagDef]
+
+  describe "example program" $
+    it "can show help" $ do
+      execWriter (run []) `shouldBe` runHeader
+
+      let names = ["file1", "file2"]
+      execWriter (run names) `shouldBe` runHeader ++ names
+      execWriter (run $ names ++ ["-h"]) `shouldBe` runHeader ++ names ++ ["-h"]
+
+      let msg = ["\"example\" (\"-h\" | [filepath...])"]
+      execWriter (run ["-h"]) `shouldBe` runHeader ++ helpHeader ++ msg
+      execWriter (run ["-h", "a"]) `shouldBe` runHeader ++ helpHeader ++ msg
 
 exampleUsage :: Language Alphabet
 exampleUsage = lit "git" #- meta "flags" #- (lit "clone" |- lit "init")
