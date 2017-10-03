@@ -31,7 +31,9 @@ spec = do
 
       let msg = [ "Usage: \"example\" (flag | [filepaths...])"
                 , ""
-                , "flag = \"-h\""
+                , "Name definitions:"
+                , ""
+                , "    flag = \"-h\""
                 ]
       execWriter (run ["-h"]) `shouldBe` helpHeader ++ msg
       execWriter (run ["-h", "a"]) `shouldBe` helpHeader ++ msg

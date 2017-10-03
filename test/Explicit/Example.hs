@@ -34,12 +34,13 @@ help :: Writer [String] ()
 help = do
   tell helpHeader
   tell ["Usage: " ++ display usage]
-  tell ["", display def]
+  tell ["", "Name definitions:", "", replicate 4 ' ' ++ display def]
 
 helpHeader :: [String]
 helpHeader =
   [ "The example program."
   , "This message is displayed to indicate usage."
+  , ""
   ]
 
 usage :: Language Alphabet
