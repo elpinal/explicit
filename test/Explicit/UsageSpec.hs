@@ -4,6 +4,8 @@ import Test.Hspec
 
 import Explicit.Usage
 
+import Explicit.Example
+
 spec :: Spec
 spec =
   describe "display" $
