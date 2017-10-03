@@ -30,4 +30,4 @@ helpHeader =
   ]
 
 usage :: Language Alphabet
-usage = lit "example" #- (lit "-h" |- Kleene (meta "filepath"))
+usage = lit "example" #- (lit "-h" |- Kleene (meta "filepaths"))
