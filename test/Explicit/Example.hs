@@ -10,6 +10,7 @@ main = fmap (execWriter . run) getArgs >>= mapM_ putStrLn
 
 run :: [String] -> Writer [String] ()
 run ("-h" : _) = help
+run ("-v" : _) = tell ["version: 0.0.1"]
 run args = process args
 
 processHeader :: [String]
@@ -34,7 +35,7 @@ help :: Writer [String] ()
 help = do
   tell helpHeader
   tell ["Usage:", "", replicate 4 ' ' ++ display usage]
-  tell ["", "Name definitions:", "", replicate 4 ' ' ++ display def]
+  tell ["", "Name definitions:", "", replicate 4 ' ' ++ display defs]
 
 helpHeader :: [String]
 helpHeader =
@@ -46,5 +47,5 @@ helpHeader =
 usage :: Language Alphabet
 usage = lit "example" #- (meta "flag" |- Kleene (meta "filepaths"))
 
-def :: WithDesc
-def = WithDesc (MetaDef ("flag", lit "-h"), "Show this help")
+defs :: WithDesc
+defs = WithDesc (MetaDef ("flag", lit "-h" |- lit "-v"), display $ Symbol "Show this help" |- Symbol "Show the version")

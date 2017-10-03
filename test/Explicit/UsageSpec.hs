@@ -35,7 +35,7 @@ spec = do
                 , ""
                 , "Name definitions:"
                 , ""
-                , "    flag = \"-h\" # Show this help"
+                , "    flag = \"-h\" | \"-v\" # Show this help|Show the version"
                 ]
       execWriter (run ["-h"]) `shouldBe` helpHeader ++ msg
       execWriter (run ["-h", "a"]) `shouldBe` helpHeader ++ msg
