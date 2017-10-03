@@ -13,14 +13,20 @@ run args = do
   tell runHeader
   case args of
     ("-h" : _) -> help
-    _ -> tell args
+    _ -> process args
 
 runHeader :: [String]
 runHeader =
   [ "Hello!"
   , "This is an example program for testing of Explicit module."
   , "The arguments are processed as filenames."
+  , ""
   ]
+
+process :: [String] -> Writer [String] ()
+process args = do
+  tell ["Filepaths are:"]
+  tell args
 
 help :: Writer [String] ()
 help = do
