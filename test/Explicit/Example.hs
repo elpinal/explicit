@@ -10,13 +10,12 @@ main = fmap (execWriter . run) getArgs >>= mapM_ putStrLn
 
 run :: [String] -> Writer [String] ()
 run args = do
-  tell runHeader
   case args of
     ("-h" : _) -> help
     _ -> process args
 
-runHeader :: [String]
-runHeader =
+processHeader :: [String]
+processHeader =
   [ "Hello!"
   , "This is an example program for testing of Explicit module."
   , "The arguments are processed as filenames."
@@ -24,7 +23,12 @@ runHeader =
   ]
 
 process :: [String] -> Writer [String] ()
+process [] = do
+  tell processHeader
+  tell ["There are no filepaths."]
+
 process args = do
+  tell processHeader
   tell ["Filepaths are:"]
   tell args
 

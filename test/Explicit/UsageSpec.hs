@@ -22,18 +22,19 @@ spec = do
 
   describe "example program" $
     it "can show help" $ do
-      execWriter (run []) `shouldBe` runHeader
+      execWriter (run []) `shouldBe` processHeader ++ ["There are no filepaths."]
 
       let names = ["file1", "file2"]
-      execWriter (run names) `shouldBe` runHeader ++ names
-      execWriter (run $ names ++ ["-h"]) `shouldBe` runHeader ++ names ++ ["-h"]
+      let header = processHeader ++ ["Filepaths are:"]
+      execWriter (run names) `shouldBe` header ++ names
+      execWriter (run $ names ++ ["-h"]) `shouldBe` header ++ names ++ ["-h"]
 
       let msg = [ "Usage: \"example\" (flag | [filepaths...])"
                 , ""
                 , "flag = \"-h\""
                 ]
-      execWriter (run ["-h"]) `shouldBe` runHeader ++ helpHeader ++ msg
-      execWriter (run ["-h", "a"]) `shouldBe` runHeader ++ helpHeader ++ msg
+      execWriter (run ["-h"]) `shouldBe` helpHeader ++ msg
+      execWriter (run ["-h", "a"]) `shouldBe` helpHeader ++ msg
 
 exampleUsage :: Language Alphabet
 exampleUsage = lit "git" #- meta "flags" #- (lit "clone" |- lit "init")
