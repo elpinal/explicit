@@ -6,20 +6,28 @@ import Explicit.Usage
 
 run :: [String] -> Writer [String] ()
 run args = do
-  tell [ "Hello!"
-       , "This is an example program for testing of Explicit module."
-       , "The arguments are processed as filenames."
-       ]
+  tell runHeader
   case args of
     ("-h" : _) -> help
     _ -> tell args
 
+runHeader :: [String]
+runHeader =
+  [ "Hello!"
+  , "This is an example program for testing of Explicit module."
+  , "The arguments are processed as filenames."
+  ]
+
 help :: Writer [String] ()
 help = do
-  tell [ "The example program."
-       , "This message is displayed to indicate usage."
-       ]
+  tell helpHeader
   tell [display usage]
+
+helpHeader :: [String]
+helpHeader =
+  [ "The example program."
+  , "This message is displayed to indicate usage."
+  ]
 
 usage :: Language Alphabet
 usage = lit "example" #- (lit "-h" |- Kleene (meta "filepath"))
