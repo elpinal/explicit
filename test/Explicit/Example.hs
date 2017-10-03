@@ -34,8 +34,15 @@ process args = do
 help :: Writer [String] ()
 help = do
   tell helpHeader
-  tell ["Usage:", "", replicate 4 ' ' ++ display usage]
-  tell ["", "Name definitions:", "", replicate 4 ' ' ++ display defs]
+  tell
+    [ "Usage:"
+    , ""
+    , replicate 4 ' ' ++ display usage
+    ,""
+    , "Name definitions:"
+    , ""
+    , replicate 4 ' ' ++ display defs
+    ]
 
 helpHeader :: [String]
 helpHeader =
