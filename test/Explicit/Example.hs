@@ -22,6 +22,7 @@ help :: Writer [String] ()
 help = do
   tell helpHeader
   tell ["Usage: " ++ display usage]
+  tell ["", display def]
 
 helpHeader :: [String]
 helpHeader =
