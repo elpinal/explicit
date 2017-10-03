@@ -28,7 +28,7 @@ spec = do
       execWriter (run names) `shouldBe` runHeader ++ names
       execWriter (run $ names ++ ["-h"]) `shouldBe` runHeader ++ names ++ ["-h"]
 
-      let msg = ["Usage: \"example\" (\"-h\" | [filepaths...])"]
+      let msg = ["Usage: \"example\" (flag | [filepaths...])"]
       execWriter (run ["-h"]) `shouldBe` runHeader ++ helpHeader ++ msg
       execWriter (run ["-h", "a"]) `shouldBe` runHeader ++ helpHeader ++ msg
 

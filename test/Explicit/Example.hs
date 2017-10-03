@@ -30,4 +30,7 @@ helpHeader =
   ]
 
 usage :: Language Alphabet
-usage = lit "example" #- (lit "-h" |- Kleene (meta "filepaths"))
+usage = lit "example" #- (meta "flag" |- Kleene (meta "filepaths"))
+
+def :: MetaDef
+def = MetaDef ("flag", lit "-h")
