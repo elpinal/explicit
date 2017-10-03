@@ -21,7 +21,7 @@ runHeader =
 help :: Writer [String] ()
 help = do
   tell helpHeader
-  tell [display usage]
+  tell ["Usage: " ++ display usage]
 
 helpHeader :: [String]
 helpHeader =
