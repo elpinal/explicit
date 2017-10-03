@@ -9,10 +9,8 @@ main :: IO ()
 main = fmap (execWriter . run) getArgs >>= mapM_ putStrLn
 
 run :: [String] -> Writer [String] ()
-run args = do
-  case args of
-    ("-h" : _) -> help
-    _ -> process args
+run ("-h" : _) = help
+run args = process args
 
 processHeader :: [String]
 processHeader =
