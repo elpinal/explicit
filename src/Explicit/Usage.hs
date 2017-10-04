@@ -13,6 +13,14 @@ data Language a =
   | Option (Language a)
     deriving Show
 
+instance Functor Language where
+  fmap f (Symbol a) = Symbol $ f a
+  fmap f (Kleene a) = Kleene $ fmap f a
+  fmap f (Positive a) = Positive $ fmap f a
+  fmap f (Union a b) = Union (fmap f a) $ fmap f b
+  fmap f (Concat a b) = Concat (fmap f a) $ fmap f b
+  fmap f (Option a) = Option $ fmap f a
+
 -- |
 -- Synonym for @Union@.
 --
